@@ -1,0 +1,28 @@
+
+<h4>
+ Intrnal Server Error --fresh the page or contact with admin
+</h4>
+<ng-container *ngIf="error">
+  <h5 class="text-danger">
+    {{error.message}}
+  </h5>
+  <p class="font-weight-bold">
+  If you see this error again please contact with admin
+  </p>
+  <ol>
+   <li>
+    Open the console and check network tab for any error message
+   </li>
+    <li>
+     check the request url is correct or not
+    </li>
+    <li>
+     reproduce the problem to postman and check the response -- if you see the same error then 100% sure that the problem is in server side not in client side
+  </ol>
+  <p style="font-weight: bold;">
+    following the stack trace of the error message
+  </p>
+  <code>
+    {{error.details}}
+  </code>
+</ng-container>

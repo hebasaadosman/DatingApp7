@@ -8,9 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   model: any = {};
 
   constructor(
@@ -18,11 +18,16 @@ export class NavComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService
   ) {}
-  ngOnInit(): void {}
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: () => this.router.navigateByUrl('/members'),
+      next: (response) => {
+        console.log('hi i am here')
+        this.router.navigateByUrl('/members');
+      },
+      error: (error) => {
+        console.log(error);
+      },
     });
   }
   logout() {

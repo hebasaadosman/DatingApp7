@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: '',
-    component: HomeComponent,
     canActivate: [authGuard],
     runGuardsAndResolvers: 'always',
     children: [
@@ -27,7 +26,7 @@ const routes: Routes = [
         component: MemberListComponent,
       },
       {
-        path: 'member/:id',
+        path: 'member/:username',
         component: MemberDetailsComponent,
       },
       {

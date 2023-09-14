@@ -16,6 +16,8 @@ namespace API.Extensions
             services.AddDbContext<DataContext>(options =>
             options.UseSqlite(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>(); // Add the IUserRepository interface and the UserRepository class to the services container.
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Add the AutoMapperProfiles class to the services container.
             services.AddCors();
 
         }

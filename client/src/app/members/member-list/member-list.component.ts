@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
@@ -8,17 +9,10 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-list.component.css'],
 })
 export class MemberListComponent implements OnInit {
-  members: Member[] = [];
+  members$: Observable<Member[]> | undefined;
   constructor(private membersService: MembersService) {}
   ngOnInit() {
-    this.loadMembers();
+    this.members$ = this.membersService.getMembers();
   }
-  loadMembers() {
 
-    this.membersService.getMembers().subscribe({
-      next: (members) => {
-        this.members = members;
-      },
-    });
-  }
 }

@@ -24,10 +24,16 @@ namespace API.Data
             return await _context.Users.FindAsync(id); // FindAsync() is a method that is available to us from the DbContext class.
         }
 
-        public async Task<MemberDto> GetUserByUsernameAsync(string username)
+        public async Task<MemberDto> GetUserByMemberNameAsync(string username)
         {
             return await _context.Users.Include(p => p.Photos)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync(x => x.UserName == username); // SingleOrDefaultAsync() is a method that is available to us from the DbContext class.
+        }
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        {
+            return await _context.Users.Include(p => p.Photos)
+
             .SingleOrDefaultAsync(x => x.UserName == username); // SingleOrDefaultAsync() is a method that is available to us from the DbContext class.
         }
 

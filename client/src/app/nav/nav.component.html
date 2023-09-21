@@ -44,8 +44,10 @@
         src="{{ user.photoUrl || './assets/user.png' }}"
         alt="{{ user.username }}"
       />
-      <a class="dropdown-toggle text-light text-decoration-none ms-1" dropdownToggle
-        >Welcome {{ user.username | uppercase }}</a
+      <a
+        class="dropdown-toggle text-light text-decoration-none ms-1"
+        dropdownToggle
+        >Welcome {{ user.knownAs }}</a
       >
 
       <div *dropdownMenu class="dropdown-menu">

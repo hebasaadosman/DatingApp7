@@ -2,6 +2,8 @@
 
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -37,11 +39,24 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username); // SingleOrDefaultAsync() is a method that is available to us from the DbContext class.
         }
 
-        public async Task<IEnumerable<MemberDto>> GetUsersAsync()
+        public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users.Include(p => p.Photos)
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .ToListAsync(); // ToListAsync() is a method that is available to us from the DbContext class.
+            var query = _context.Users.AsQueryable();
+            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+            query = query.Where(u => u.Gender == userParams.Gender);
+
+            var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge-1));
+            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+            query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+         query = userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                _ => query.OrderByDescending(u => u.LastActive)
+            };
+            return await PageList<MemberDto>.CreateAsync(
+                query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
+                userParams.PageNumber,
+                userParams.PageSize);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -52,6 +67,11 @@ namespace API.Data
         public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified; // Update the user in the database.
+        }
+
+        public Task<IEnumerable<AppUser>> GetUsersAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

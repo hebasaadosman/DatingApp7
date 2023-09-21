@@ -8,7 +8,7 @@ namespace API.Extensions
     {
         public static string GetUsername(this ClaimsPrincipal user) // Add a new method called GetUsername to the ClaimsPrincipalExtensions class.
         {
-            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value; // Return the username from the token.
+            return user.FindFirst(ClaimTypes.Name)?.Value; // Return the username from the token.
         }
 
         public static int GetUserId(this ClaimsPrincipal user) // Add a new method called GetUserId to the ClaimsPrincipalExtensions class.

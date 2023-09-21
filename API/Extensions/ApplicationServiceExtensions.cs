@@ -22,6 +22,7 @@ namespace API.Extensions
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Add the AutoMapperProfiles class to the services container.
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings")); // Add the CloudinarySettings class to the services container.
             services.AddScoped<IPhotoService, PhotoService>(); // Add the IPhotoService interface and the PhotoService class to the services container.
+            services.AddScoped<LogUserActivity>(); // Add the LogUserActivity class to the services container.
             return services;
 
         }

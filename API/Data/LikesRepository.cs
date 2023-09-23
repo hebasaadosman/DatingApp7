@@ -24,7 +24,7 @@ namespace API.Data
 
         public async Task<PageList<LikeDto>> GetUserLikes(LikeParams likeParams)
         {
-            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();//still not excute the query
             var likes = _context.Likes.AsQueryable();
             if (likeParams.Predicate == "liked")
             {

@@ -13,7 +13,6 @@ import { User } from 'src/app/_models/user';
   styleUrls: ['./member-list.component.css'],
 })
 export class MemberListComponent implements OnInit {
-  // members$: Observable<Member[]> | undefined;
   members: Member[] = [];
   pagination: Pagination | undefined;
   userParams: UserParams | undefined;
@@ -26,11 +25,11 @@ export class MemberListComponent implements OnInit {
     this.userParams = this.membersService.getUserParams();
   }
   ngOnInit() {
-    // this.members$ = this.membersService.getMembers();
     this.loadMembers();
   }
   loadMembers() {
     if (this.userParams) {
+        debugger;
       this.membersService.setUserParams(this.userParams);
       this.membersService.getMembers(this.userParams).subscribe({
         next: (response) => {
@@ -46,6 +45,7 @@ export class MemberListComponent implements OnInit {
     }
   }
   pageChanged(event: any) {
+      debugger;
     if (this.userParams && this.userParams?.pageNumber !== event.page) {
       this.userParams.pageNumber = event.page;
       this.membersService.setUserParams(this.userParams);

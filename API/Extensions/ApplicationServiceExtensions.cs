@@ -21,6 +21,7 @@ namespace API.Extensions
             services.AddScoped<IPhotoService, PhotoService>(); // Add the IPhotoService interface and the PhotoService class to the services container.
             services.AddScoped<LogUserActivity>(); // Add the LogUserActivity class to the services container.
             services.AddScoped<ILikesRepository, LikesRepository>(); // Add the ILikesRepository interface and the LikesRepository class to the services container.
+            services.AddScoped<IMessageRepository, MessageRepository>(); // Add the IMessageRepository interface and the MessageRepository class to the services container.
             return services;
 
         }

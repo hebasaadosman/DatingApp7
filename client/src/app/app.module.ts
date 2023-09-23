@@ -51,7 +51,6 @@ import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
-
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

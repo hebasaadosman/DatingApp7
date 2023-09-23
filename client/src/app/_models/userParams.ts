@@ -8,7 +8,9 @@ export class UserParams {
   pageSize = 5;
   orderBy = 'lastActive';
   constructor(user: User) {
-    this.gender = user.gender === 'female' ? 'male' : 'female';
+    debugger;
+    console.log(user.gender);
+    this.gender = user.gender === 'male' ? 'female' : 'male';
   }
 }
 //why not interface? because we need to initialize the values using constructor

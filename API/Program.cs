@@ -1,7 +1,9 @@
 
 using API.Data;
+using API.Entities;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -35,8 +37,10 @@ using (var scope = app.Services.CreateScope()) // CreateScope
     try
     {
         var context = services.GetRequiredService<DataContext>();
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
         await context.Database.MigrateAsync();
-        await Seed.SeedDataUsers(context);
+       await Seed.SeedDataUsers(userManager,roleManager);
     }
     catch (Exception ex)
     {

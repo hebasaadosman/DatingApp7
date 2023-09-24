@@ -30,6 +30,7 @@ namespace API.Controllers
         }
         // GET: api/Users
 
+       
         [HttpGet]
         //FromQuery is used to get the parameters from the query string
         public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
@@ -45,6 +46,7 @@ namespace API.Controllers
             return Ok(users);
 
         }
+       
 
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)

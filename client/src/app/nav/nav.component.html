@@ -25,6 +25,15 @@
           >
         </li>
         <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin"
+            routerLinkActive="active"
+            *appHasRole="['Admin', 'Moderator']"
+            >Admin Panel</a
+          >
+        </li>
+        <li class="nav-item">
           <a class="nav-link" (click)="logout()">Logout</a>
         </li>
       </ng-container>

@@ -3,6 +3,7 @@ using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -22,6 +23,8 @@ namespace API.Extensions
             services.AddScoped<LogUserActivity>(); // Add the LogUserActivity class to the services container.
             services.AddScoped<ILikesRepository, LikesRepository>(); // Add the ILikesRepository interface and the LikesRepository class to the services container.
             services.AddScoped<IMessageRepository, MessageRepository>(); // Add the IMessageRepository interface and the MessageRepository class to the services container.
+            services.AddSignalR(); // Add the SignalR service to the services container.
+            services.AddSingleton<PresenceTracker>();//singleton because we want to keep the same instance of the presence tracker throughout the application
             return services;
 
         }

@@ -8,7 +8,6 @@ export class UserParams {
   pageSize = 5;
   orderBy = 'lastActive';
   constructor(user: User) {
-    debugger;
     console.log(user.gender);
     this.gender = user.gender === 'male' ? 'female' : 'male';
   }

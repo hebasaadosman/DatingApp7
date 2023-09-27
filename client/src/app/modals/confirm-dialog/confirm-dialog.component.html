@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body" id="modal-body">
+  <p>{{ message }}</p>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="decline()"
+    data-dismiss="modal"
+  >
+    {{ btnCancelText }}
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="confirm()"
+    data-dismiss="modal"
+  >
+    {{ btnOkText }}
+  </button>
+</div>

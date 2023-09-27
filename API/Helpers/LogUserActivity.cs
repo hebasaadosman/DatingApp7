@@ -16,10 +16,10 @@ namespace API.Helpers
             if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
             var userId = resultContext.HttpContext.User.GetUserId();
 
-            var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();// We need to get an instance of our repository.
-            var user = await repo.GetUserByIdAsync(int.Parse(userId.ToString()));
+            var unitOfWork = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();// We need to get an instance of our repository.
+            var user = await unitOfWork.UserRepository.GetUserByIdAsync(int.Parse(userId.ToString()));
             user.LastActive = DateTime.UtcNow;
-            await repo.SaveAllAsync();
+            await unitOfWork.Complete();
         }
     }
 }

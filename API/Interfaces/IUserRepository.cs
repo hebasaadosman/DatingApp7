@@ -9,12 +9,14 @@ namespace API.Interfaces
     public interface IUserRepository
     {
         void Update(AppUser user);
-        Task<bool> SaveAllAsync(); // Return a boolean to indicate whether or not the save was successful.
-        Task<IEnumerable<AppUser>> GetUsersAsync(); // Return a list of users.
-        Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams); // Return a list of users.
-        Task<AppUser> GetUserByIdAsync(int id); // Return a single user.
-        Task<MemberDto> GetUserByMemberNameAsync(string username); // Return a single user.
-        Task<AppUser> GetUserByUsernameAsync(string username); // Return a single user.
-        
+
+
+        Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams);
+        Task<AppUser> GetUserByIdAsync(int id);
+        Task<MemberDto> GetUserByMemberNameAsync(string username, bool isCurrentUser);
+        Task<AppUser> GetUserByUsernameAsync(string username);
+        Task<string> GetUserGender(string username);
+        Task<AppUser> GetUserByPhotoId(int photoId);
+
     }
 }

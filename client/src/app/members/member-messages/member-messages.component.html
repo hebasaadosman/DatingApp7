@@ -4,6 +4,9 @@
       <h5 class="card-title">No messages</h5>
     </div>
     <ul
+    #scrollMe
+    style="overflow: scroll; overflow-x: hidden; height: 500px;"
+    [scrollTop]="scrollMe.scrollHeight"
       *ngIf="(messageService.messageThread$ | async)!.length > 0"
       class="chat"
     >

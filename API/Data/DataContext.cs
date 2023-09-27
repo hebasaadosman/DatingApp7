@@ -6,61 +6,66 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-public class DataContext : IdentityDbContext<AppUser, AppRole, int, 
-    IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, 
-    IdentityRoleClaim<int>, IdentityUserToken<int>>
-{
-    public DataContext(DbContextOptions<DataContext> options) : base(options)
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int,
+        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-    }
-
-  
-    public DbSet<UserLike> Likes { get; set; }
-    public DbSet<Message> Messages { get; set; }
-    public DbSet<Group> Groups { get; set; }
-    public DbSet<Connection> Connections { get; set; }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
 
-    protected override void OnModelCreating(ModelBuilder builder){
-        base.OnModelCreating(builder);
-        builder.Entity<AppUser>()
-            .HasMany(ur => ur.UserRoles)
-            .WithOne(u => u.User)
-            .HasForeignKey(ur => ur.UserId)
-            .IsRequired();
+        public DbSet<UserLike> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Connection> Connections { get; set; }
 
-        builder.Entity<AppRole>()
-            .HasMany(ur => ur.UserRoles)
-            .WithOne(u => u.Role)
-            .HasForeignKey(ur => ur.RoleId)
-            .IsRequired();
+        public DbSet<Photo> Photos { get; set; }
 
-        builder.Entity<UserLike>()
-            .HasKey(k => new {k.SourceUserId, k.TargetUserId});
 
-        builder.Entity<UserLike>()
-            .HasOne(s => s.SourceUser)
-            .WithMany(l => l.LikedUsers)
-            .HasForeignKey(s => s.SourceUserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
 
-        builder.Entity<UserLike>()
-            .HasOne(s => s.TargetUser)
-            .WithMany(l => l.LikedByUsers)
-            .HasForeignKey(s => s.TargetUserId)
-            .OnDelete(DeleteBehavior.Cascade);//cascade delete behavior to delete likes when user is deleted from db 
-            
+            builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
-        builder.Entity<Message>()
-            .HasOne(u => u.Recipient)
-            .WithMany(m => m.MessagesReceived)
-            .OnDelete(DeleteBehavior.Restrict);//restrict delete behavior to prevent cascade delete of messages when user is deleted from db 
+            builder.Entity<UserLike>()
+                .HasKey(k => new { k.SourceUserId, k.TargetUserId });
+
+            builder.Entity<UserLike>()
+                .HasOne(s => s.SourceUser)
+                .WithMany(l => l.LikedUsers)
+                .HasForeignKey(s => s.SourceUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserLike>()
+                .HasOne(s => s.TargetUser)
+                .WithMany(l => l.LikedByUsers)
+                .HasForeignKey(s => s.TargetUserId)
+                .OnDelete(DeleteBehavior.Cascade);//cascade delete behavior to delete likes when user is deleted from db 
+
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.MessagesReceived)
+                .OnDelete(DeleteBehavior.Restrict);//restrict delete behavior to prevent cascade delete of messages when user is deleted from db 
 
             builder.Entity<Message>()
             .HasOne(u => u.Sender)
             .WithMany(m => m.MessagesSent)
             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
+        }
+
     }
-   
-}
 }

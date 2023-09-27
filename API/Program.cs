@@ -31,6 +31,9 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence"); // MapHub hub to the /hubs/presence endpoint.
 app.MapHub<MessageHub>("hubs/message"); // MapHub hub to the /hubs/message endpoint.
@@ -44,10 +47,10 @@ using (var scope = app.Services.CreateScope()) // CreateScope
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
         var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
         await context.Database.MigrateAsync();
-    //    context.Connections.RemoveRange(context.Connections);//remove all connections from db on startup // for small scale app
+        //    context.Connections.RemoveRange(context.Connections);//remove all connections from db on startup // for small scale app
         await context.Database.MigrateAsync();
         await context.Database.ExecuteSqlRawAsync("DELETE FROM  [Connections]");//remove all connections from db on startup // for large scale app
-       await Seed.SeedDataUsers(userManager,roleManager);
+        await Seed.SeedDataUsers(userManager, roleManager);
     }
     catch (Exception ex)
     {

@@ -41,12 +41,12 @@ export class AccountService {
     Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
-    this.presenceService.createHubConnection(user);//add this line to create a hub connection when the user logs in
+    this.presenceService.createHubConnection(user); //add this line to create a hub connection when the user logs in
   }
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
-    this.presenceService.stopHubConnection();//add this line to stop the hub connection when the user logs out
+    this.presenceService.stopHubConnection(); //add this line to stop the hub connection when the user logs out
   }
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));

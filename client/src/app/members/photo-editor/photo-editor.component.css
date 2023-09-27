@@ -1,8 +1,22 @@
 .nv-file-over {
   border-style: dashed;
   border-width: 2px;
-  border-color: #0087F7;
+  border-color: #0087f7;
 }
 input[type="file"] {
-  color:transparent
+  color: transparent;
+}
+.not-approved {
+  opacity: 0.2;
+}
+.img-wrapper {
+  position: relative;
+}
+.img-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 30%;
 }
